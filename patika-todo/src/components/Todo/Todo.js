@@ -1,4 +1,4 @@
-function Todo({ id, title, completed, toggleCompleteTodo }) {
+function Todo({ id, title, completed, toggleCompleteTodo, deleteTodo }) {
 	return (
 		<li className={completed ? "completed" : ""} key={id}>
 			<div className="view">
@@ -9,7 +9,7 @@ function Todo({ id, title, completed, toggleCompleteTodo }) {
 					onChange={() => toggleCompleteTodo(id)}
 				/>
 				<label>{title}</label>
-				<button className="destroy"></button>
+				<button className="destroy" onClick={() => deleteTodo(id)}></button>
 			</div>
 		</li>
 	);

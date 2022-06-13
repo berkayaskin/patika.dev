@@ -27,10 +27,19 @@ function App({ initialTodos }) {
 		setTodos(updatedTodo);
 	}
 
+	function deleteTodo(id) {
+		const remainingTodos = todos.filter((todo) => id !== todo.id);
+		setTodos(remainingTodos);
+	}
+
 	return (
 		<div className="todoapp">
 			<TodoForm addTodo={addTodo} />
-			<TodoList todos={todos} toggleCompleteTodo={toggleCompleteTodo} />
+			<TodoList
+				todos={todos}
+				toggleCompleteTodo={toggleCompleteTodo}
+				deleteTodo={deleteTodo}
+			/>
 
 			<footer className="footer">
 				<span className="todo-count">
