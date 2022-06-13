@@ -8,7 +8,7 @@ import TodoList from "./components/TodoList";
 function App({ initialTodos }) {
 	const [todos, setTodos] = useState(initialTodos);
 
-	const addTodo = (title) => {
+	function addTodo(title) {
 		const newTodo = {
 			id: uuidv4(),
 			title: title,
@@ -16,12 +16,21 @@ function App({ initialTodos }) {
 		};
 
 		setTodos([...todos, newTodo]);
-	};
+	}
+
+	function toggleCompleteTodo(id) {
+		const updatedTodo = todos.map((todo) => {
+			if (todo.id === id) return { ...todo, completed: !todo.completed };
+			return todo;
+		});
+
+		setTodos(updatedTodo);
+	}
 
 	return (
 		<div className="todoapp">
 			<TodoForm addTodo={addTodo} />
-			<TodoList todos={todos} />
+			<TodoList todos={todos} toggleCompleteTodo={toggleCompleteTodo} />
 
 			<footer className="footer">
 				<span className="todo-count">

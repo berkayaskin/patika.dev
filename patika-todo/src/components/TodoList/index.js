@@ -1,4 +1,4 @@
-function TodoList({ todos }) {
+function TodoList({ todos, toggleCompleteTodo }) {
 	return (
 		<section className="main">
 			<input className="toggle-all" type="checkbox" />
@@ -12,8 +12,8 @@ function TodoList({ todos }) {
 								<input
 									className="toggle"
 									type="checkbox"
-									checked={todo.completed}
-									defaultChecked={false}
+									defaultChecked={todo.completed}
+									onChange={() => toggleCompleteTodo(todo.id)}
 								/>
 								<label>{todo.title}</label>
 								<button className="destroy"></button>
