@@ -1,14 +1,26 @@
 import "./App.css";
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 
-function App() {
-	const [todos, setTodos] = useState([]);
+function App({ initialTodos }) {
+	const [todos, setTodos] = useState(initialTodos);
+
+	const addTodo = (title) => {
+		const newTodo = {
+			id: uuidv4(),
+			title: title,
+			completed: false,
+		};
+
+		setTodos([...todos, newTodo]);
+	};
 
 	return (
 		<div className="todoapp">
-			<TodoForm allTodos={todos} addTodo={setTodos} />
+			<TodoForm addTodo={addTodo} />
 			<TodoList todos={todos} />
 
 			<footer className="footer">

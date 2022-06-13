@@ -1,35 +1,33 @@
-import { useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
 
-function TodoForm({ allTodos, addTodo }) {
-	const inputRef = useRef(null);
+function TodoForm({ addTodo }) {
+	const [title, setTitle] = useState("");
 
-	const handleAddTodo = (event) => {
-		if (inputRef.current.value !== "" && event.key === "Enter") {
-			event.preventDefault();
-			addTodo([
-				...allTodos,
-				{
-					id: uuidv4(),
-					title: inputRef.current.value,
-					completed: false,
-				},
-			]);
-			inputRef.current.value = "";
-		}
-	};
+	function handleSubmit(e) {
+		e.preventDefault();
+		if (!title.trim() || title.trim().length === 0) return;
+		addTodo(title);
+		setTitle("");
+	}
+
+	function handleChange(e) {
+		setTitle(e.target.value);
+	}
 
 	return (
 		<header className="header">
 			<h1>todos</h1>
-			<input
-				className="new-todo"
-				type="text"
-				placeholder="What needs to be done?"
-				autoFocus
-				ref={inputRef}
-				onKeyDown={(e) => handleAddTodo(e)}
-			/>
+			<form onSubmit={handleSubmit}>
+				<input
+					className="new-todo"
+					type="text"
+					placeholder="What needs to be done?"
+					autoFocus
+					autoComplete="off"
+					value={title}
+					onChange={handleChange}
+				/>
+			</form>
 		</header>
 	);
 }

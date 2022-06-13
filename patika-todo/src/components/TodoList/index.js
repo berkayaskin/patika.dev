@@ -7,7 +7,7 @@ function TodoList({ todos }) {
 			<ul className="todo-list">
 				{todos.map((todo) => {
 					return (
-						<li className={todo.done ? "completed" : ""} key={todo.id}>
+						<li className={todo.completed ? "completed" : ""} key={todo.id}>
 							<div className="view">
 								<input
 									className="toggle"
