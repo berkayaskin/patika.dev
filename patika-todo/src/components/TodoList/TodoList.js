@@ -7,11 +7,14 @@ function TodoList({
 	isEditing,
 	setIsEditing,
 	editTodo,
+	markAllAsComplete,
 }) {
 	return (
 		<section className="main">
 			<input className="toggle-all" type="checkbox" />
-			<label htmlFor="toggle-all">Mark all as complete</label>
+			<label htmlFor="toggle-all" onClick={markAllAsComplete}>
+				Mark all as complete
+			</label>
 
 			<ul className="todo-list">
 				{todos.map((todo) => (

@@ -54,7 +54,7 @@ function Todo({
 				<input
 					className="toggle"
 					type="checkbox"
-					defaultChecked={completed}
+					checked={completed}
 					onChange={() => toggleCompleteTodo(id)}
 				/>
 				<label onClick={() => setIsEditing(id)}>{title}</label>

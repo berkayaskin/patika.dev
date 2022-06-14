@@ -57,6 +57,24 @@ function App({ initialTodos }) {
 		setTodos(remainingTodos);
 	}
 
+	function markAllAsComplete() {
+		const markAllCompleted = todos.map((todo) => ({
+			...todo,
+			completed: true,
+		}));
+
+		const markAllUncompleted = todos.map((todo) => ({
+			...todo,
+			completed: false,
+		}));
+
+		if (todos.some((todo) => !todo.completed)) {
+			setTodos(markAllCompleted);
+		} else {
+			setTodos(markAllUncompleted);
+		}
+	}
+
 	const filteredTodoList = todos.filter(FILTER_MAP[filter]); //filter todos in the UI
 	const completedTodosLength = todos.filter((todo) => todo.completed).length;
 	const uncompletedTodosLength = todos.filter((todo) => !todo.completed).length;
@@ -72,6 +90,8 @@ function App({ initialTodos }) {
 				isEditing={isEditing}
 				setIsEditing={setIsEditing}
 				editTodo={editTodo}
+				markAllAsComplete={markAllAsComplete}
+				uncompletedTodosLength={uncompletedTodosLength}
 			/>
 			{todos.length > 0 && (
 				<Footer
@@ -82,6 +102,7 @@ function App({ initialTodos }) {
 					setFilter={setFilter}
 					clearCompletedTodos={clearCompletedTodos}
 					completedTodosLength={completedTodosLength}
+					markAllAsComplete={markAllAsComplete}
 				/>
 			)}
 		</div>
