@@ -4,9 +4,19 @@ import { v4 as uuidv4 } from "uuid";
 
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
+import Footer from "./components/Footer";
+
+const FILTER_MAP = {
+	All: () => true,
+	Active: (todo) => !todo.completed,
+	Completed: (todo) => todo.completed,
+};
+
+const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 function App({ initialTodos }) {
 	const [todos, setTodos] = useState(initialTodos);
+	const [filter, setFilter] = useState("All");
 
 	function addTodo(title) {
 		const newTodo = {
@@ -32,37 +42,35 @@ function App({ initialTodos }) {
 		setTodos(remainingTodos);
 	}
 
+	function clearCompletedTodos() {
+		const remainingTodos = todos.filter((todo) => !todo.completed);
+		setTodos(remainingTodos);
+	}
+
+	const filteredTodoList = todos.filter(FILTER_MAP[filter]); //filter todos in the UI
+	const completedTodosLength = todos.filter((todo) => todo.completed).length;
+	const uncompletedTodosLength = todos.filter((todo) => !todo.completed).length;
+	const uncompletedTodosNoun = uncompletedTodosLength !== 1 ? "items" : "item";
+
 	return (
 		<div className="todoapp">
 			<TodoForm addTodo={addTodo} />
 			<TodoList
-				todos={todos}
+				todos={filteredTodoList}
 				toggleCompleteTodo={toggleCompleteTodo}
 				deleteTodo={deleteTodo}
 			/>
-
-			<footer className="footer">
-				<span className="todo-count">
-					<strong>2 </strong>
-					items left
-				</span>
-
-				<ul className="filters">
-					<li>
-						<a href="/" className="selected">
-							All
-						</a>
-					</li>
-					<li>
-						<a href="/">Active</a>
-					</li>
-					<li>
-						<a href="/">Completed</a>
-					</li>
-				</ul>
-
-				<button className="clear-completed">Clear completed</button>
-			</footer>
+			{todos.length > 0 && (
+				<Footer
+					todosNoun={uncompletedTodosNoun}
+					todosLength={uncompletedTodosLength}
+					filterNames={FILTER_NAMES}
+					filter={filter}
+					setFilter={setFilter}
+					clearCompletedTodos={clearCompletedTodos}
+					completedTodosLength={completedTodosLength}
+				/>
+			)}
 		</div>
 	);
 }
