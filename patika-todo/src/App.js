@@ -17,6 +17,7 @@ const FILTER_NAMES = Object.keys(FILTER_MAP);
 function App({ initialTodos }) {
 	const [todos, setTodos] = useState(initialTodos);
 	const [filter, setFilter] = useState("All");
+	const [isEditing, setIsEditing] = useState(false);
 
 	function addTodo(title) {
 		const newTodo = {
@@ -42,6 +43,15 @@ function App({ initialTodos }) {
 		setTodos(remainingTodos);
 	}
 
+	function editTodo(id, newTitle) {
+		const editedTodoList = todos.map((todo) => {
+			if (todo.id === id) return { ...todo, title: newTitle };
+			return todo;
+		});
+
+		setTodos(editedTodoList);
+	}
+
 	function clearCompletedTodos() {
 		const remainingTodos = todos.filter((todo) => !todo.completed);
 		setTodos(remainingTodos);
@@ -59,6 +69,9 @@ function App({ initialTodos }) {
 				todos={filteredTodoList}
 				toggleCompleteTodo={toggleCompleteTodo}
 				deleteTodo={deleteTodo}
+				isEditing={isEditing}
+				setIsEditing={setIsEditing}
+				editTodo={editTodo}
 			/>
 			{todos.length > 0 && (
 				<Footer

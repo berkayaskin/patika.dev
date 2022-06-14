@@ -1,6 +1,13 @@
 import Todo from "../Todo";
 
-function TodoList({ todos, toggleCompleteTodo, deleteTodo }) {
+function TodoList({
+	todos,
+	toggleCompleteTodo,
+	deleteTodo,
+	isEditing,
+	setIsEditing,
+	editTodo,
+}) {
 	return (
 		<section className="main">
 			<input className="toggle-all" type="checkbox" />
@@ -15,6 +22,9 @@ function TodoList({ todos, toggleCompleteTodo, deleteTodo }) {
 						key={todo.id}
 						toggleCompleteTodo={toggleCompleteTodo}
 						deleteTodo={deleteTodo}
+						isEditing={isEditing === todo.id}
+						setIsEditing={setIsEditing}
+						editTodo={editTodo}
 					/>
 				))}
 			</ul>
